@@ -1,4 +1,4 @@
-#  Git start
+# Git init
 
 ```
 mkdir project
@@ -6,17 +6,16 @@ cd project
 git init
 ```
 
-## Create some file
+# Git add
 
 `README.md` is created with initial content.
 
-## Add file
+## Git add `-p` or `--progressive`
 
 Using progressive mode.
 
 `git add -p`
 
-⋊> ~/c/t/git-sandbox on master ⨯ git add -p                                                                                                                                         21:13:55
 ```diff --git a/README.md b/README.md
 index 34e1bdd..ed610a0 100644
 --- a/README.md
@@ -45,7 +44,7 @@ By a mistake I added two extra blank lines and the changes are tracked but not
 commited yet.
 
 ```
-⋊> ~/c/t/git-sandbox on master ⨯ git st                                                                                                                                             21:14:00
+⋊> ~/c/t/git-sandbox on master ⨯ git st
 On branch master
 Your branch is up to date with 'origin/master'.
 
@@ -60,7 +59,7 @@ Changes to be committed:
 Confirming about the extra lines that are going to the commit:
 
 ```
-⋊> ~/c/t/git-sandbox on master ⨯ git diff --staged                                                                                                                                  21:14:14
+⋊> ~/c/t/git-sandbox on master ⨯ git diff --staged
 diff --git a/README.md b/README.md
 index 34e1bdd..ed610a0 100644
 --- a/README.md
@@ -81,10 +80,10 @@ index 34e1bdd..ed610a0 100644
 Reseting the changes will not erase what you did. Just discard the git entries:
 
 ```
-⋊> ~/c/t/git-sandbox on master ⨯ git reset README.md                                                                                                                                21:14:18
+⋊> ~/c/t/git-sandbox on master ⨯ git reset README.md
 Unstaged changes after reset:
 M	README.md
-⋊> ~/c/t/git-sandbox on master ⨯ git diff                                                                                                                                           21:14:26
+⋊> ~/c/t/git-sandbox on master ⨯ git diff
 diff --git a/README.md b/README.md
 index 34e1bdd..ed610a0 100644
 --- a/README.md
@@ -108,7 +107,7 @@ Using progressive mode you can use `e` option to edit the changes and remove
 what you don't want:
 
 ```
-⋊> ~/c/t/git-sandbox on master ⨯ git add -p                                                                                                                                         21:14:28
+⋊> ~/c/t/git-sandbox on master ⨯ git add -p
 diff --git a/README.md b/README.md
 index 34e1bdd..ed610a0 100644
 --- a/README.md
@@ -131,7 +130,7 @@ Using `e` will open your editor to make the changes and remove the undesired
 changes, but they remains in the original file:
 
 ```
-⋊> ~/c/t/git-sandbox on master ⨯ git diff                                                                                                                                           21:14:39
+⋊> ~/c/t/git-sandbox on master ⨯ git diff
 diff --git a/README.md b/README.md
 index 7a36e0e..ed610a0 100644
 --- a/README.md
@@ -147,7 +146,7 @@ index 7a36e0e..ed610a0 100644
 And only the changes I want are staged:
 
 ```
-⋊> ~/c/t/git-sandbox on master ⨯ git diff --staged                                                                                                                                  21:14:44
+⋊> ~/c/t/git-sandbox on master ⨯ git diff --staged
 diff --git a/README.md b/README.md
 index 34e1bdd..7a36e0e 100644
 --- a/README.md
@@ -216,7 +215,7 @@ Saving the message and closing the editor will make the commit right after close
  1 file changed, 5 insertions(+)
 ```
 
-## Amend current commit
+## Git commit `--amend`
 
 You can use `--amend` option to fix your current commit message:
 
@@ -235,4 +234,108 @@ Both cases will rewrite the last commit.
    1 file changed, 5 insertions(+)
 ```
 
+## Git commit `--fixup`
+
+Fixup can be useful for creating partial commits that belongs from previous
+implementation.
+
+Checking the commits log:
+
+```
+git l
+* 8f9dc6f - (18 seconds ago) Remove time track - Jônatas Davi Paganini (HEAD -> master)
+* 76c0158 - (8 minutes ago) Add more about git first steps - Jônatas Davi Paganini (origin/master)
+* 8efea81 - (20 minutes ago) Add commit -p - Jônatas Davi Paganini
+* 274a2a1 - (77 minutes ago) First commit :tada: - Jônatas Davi Paganini
+ ```
+
+Let's consider we made some changes and we want to put them in a specific commit:
+
+```
+ git commit -m "fixup 8efea81 Add commit --progressive"
+[master f4dcb2a] fixup 8efea81 Add commit --progressive
+ 1 file changed, 3 insertions(+), 4 deletions(-)
+```
+
+Using `git show` it's possible to see what are the c
+
+    $ git show
+
+```
+commit f4dcb2a944d2be4f69e07abc062fec4dfe8c4a0f (HEAD -> master)
+Author: Jônatas Davi Paganini <jonatas.paganini@toptal.com>
+Date:   Sat Sep 29 22:20:19 2018 -0300
+```
+
+    fixup 8efea81 Add commit --progressive
+
+```diff --git a/README.md b/README.md
+index 7a6177a..5a47a0e 100644
+-## Add file
++## Git add `-p` or `--progressive`
+```
+
+    $ git l
+```
+* f4dcb2a - (7 seconds ago) fixup 8efea81 Add commit --progressive - Jônatas Davi Paganini (HEAD -> master)
+* 8f9dc6f - (4 minutes ago) Remove time track - Jônatas Davi Paganini
+* 76c0158 - (12 minutes ago) Add more about git first steps - Jônatas Davi Paganini (origin/master)
+* 8efea81 - (23 minutes ago) Add commit -p - Jônatas Davi Paganini
+* 274a2a1 - (80 minutes ago) First commit :tada: - Jônatas Davi Paganini
+```
+
+# Git rebase 
+
+Now we have a fixup and we can group them into the previous commit. We can start
+rebasing from the first commit using the interactive mode to choose what we want
+to squash:
+
+It will open your editor and you can choose what you want to do with each
+message:
+
+```
+pick 8efea81 Add commit -p
+pick 76c0158 Add more about git first steps
+pick 8f9dc6f Remove time track
+pick 9c32078 fixup 8efea81 Add commit --progressive
+```
+
+You can see it suggests to `pick` the `fixup` message we have in the log. To
+automatically fix it with git you can use the `--autosquash` in the rebase
+option:
+
+
+
+
+
+pick 8efea81 Add commit -p
+pick 76c0158 Add more about git first steps
+fixup 8f9dc6f Remove time track
+fixup 9c32078 fixup 8efea81 Add commit --progressive
+
+# Rebase 274a2a1..9c32078 onto 274a2a1 (4 commands)
+#
+# Commands:
+# p, pick <commit> = use commit
+# r, reword <commit> = use commit, but edit the commit message
+# e, edit <commit> = use commit, but stop for amending
+# s, squash <commit> = use commit, but meld into previous commit
+# f, fixup <commit> = like "squash", but discard this commit's log message
+# x, exec <command> = run command (the rest of the line) using shell
+# d, drop <commit> = remove commit
+# l, label <label> = label current HEAD with a name
+# t, reset <label> = reset HEAD to a label
+# m, merge [-C <commit> | -c <commit>] <label> [# <oneline>]
+# .       create a merge commit using the original merge commit's
+# .       message (or the oneline, if no original merge commit was
+# .       specified). Use -c <commit> to reword the commit message.
+#
+# These lines can be re-ordered; they are executed from top to bottom.
+#
+# If you remove a line here THAT COMMIT WILL BE LOST.
+#
+#	However, if you remove everything, the rebase will be aborted.
+#
+#
+# Note that empty commits are commented out
 

@@ -289,6 +289,3 @@ You can see it suggests to `fixup` the commit we marked with `--fixup`.
 If you simply save the file and quit it will rewrite your commits following the
 order stated previously.
 
-
-
-

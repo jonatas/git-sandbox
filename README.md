@@ -11,3 +11,8 @@ git init
 `README.md` is created with initial content.
 
 ## Add file
+
+Using progressive mode.
+
+
+`git add -p`

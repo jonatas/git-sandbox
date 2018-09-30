@@ -241,6 +241,7 @@ implementation.
 
 Checking the commits log:
 
+
 ```
 git l
 * 8f9dc6f - (18 seconds ago) Remove time track - Jônatas Davi Paganini (HEAD -> master)
@@ -249,39 +250,22 @@ git l
 * 274a2a1 - (77 minutes ago) First commit :tada: - Jônatas Davi Paganini
  ```
 
-Let's consider we made some changes and we want to put them in a specific commit:
+Let's consider we made some changes and we want to put them in a specific commit.
 
 ```
- git commit -m "fixup 8efea81 Add commit --progressive"
-[master f4dcb2a] fixup 8efea81 Add commit --progressive
- 1 file changed, 3 insertions(+), 4 deletions(-)
+git add README.md
+git commit --fixup 8efea81
 ```
 
-Using `git show` it's possible to see what are the c
-
-    $ git show
+And now we have a new commit:
 
 ```
-commit f4dcb2a944d2be4f69e07abc062fec4dfe8c4a0f (HEAD -> master)
-Author: Jônatas Davi Paganini <jonatas.paganini@toptal.com>
-Date:   Sat Sep 29 22:20:19 2018 -0300
-```
-
-    fixup 8efea81 Add commit --progressive
-
-```diff --git a/README.md b/README.md
-index 7a6177a..5a47a0e 100644
--## Add file
-+## Git add `-p` or `--progressive`
-```
-
-    $ git l
-```
-* f4dcb2a - (7 seconds ago) fixup 8efea81 Add commit --progressive - Jônatas Davi Paganini (HEAD -> master)
-* 8f9dc6f - (4 minutes ago) Remove time track - Jônatas Davi Paganini
-* 76c0158 - (12 minutes ago) Add more about git first steps - Jônatas Davi Paganini (origin/master)
-* 8efea81 - (23 minutes ago) Add commit -p - Jônatas Davi Paganini
-* 274a2a1 - (80 minutes ago) First commit :tada: - Jônatas Davi Paganini
+git l
+* 2d49541 - (4 seconds ago) fixup! Add commit -p - Jônatas Davi Paganini (HEAD -> master)
+* 7671b4e - (26 minutes ago) Remove time track - Jônatas Davi Paganini
+* 76c0158 - (34 minutes ago) Add more about git first steps - Jônatas Davi Paganini (origin/master)
+* 8efea81 - (45 minutes ago) Add commit -p - Jônatas Davi Paganini
+* 274a2a1 - (2 hours ago) First commit :tada: - Jônatas Davi Paganini<Paste>
 ```
 
 # Git rebase 
@@ -295,47 +279,16 @@ message:
 
 ```
 pick 8efea81 Add commit -p
+fixup 2d49541 fixup! Add commit -p
 pick 76c0158 Add more about git first steps
-pick 8f9dc6f Remove time track
-pick 9c32078 fixup 8efea81 Add commit --progressive
+pick 7671b4e Remove time track
 ```
 
-You can see it suggests to `pick` the `fixup` message we have in the log. To
-automatically fix it with git you can use the `--autosquash` in the rebase
-option:
+You can see it suggests to `fixup` the commit we marked with `--fixup`.
+
+If you simply save the file and quit it will rewrite your commits following the
+order stated previously.
 
 
 
-
-
-pick 8efea81 Add commit -p
-pick 76c0158 Add more about git first steps
-fixup 8f9dc6f Remove time track
-fixup 9c32078 fixup 8efea81 Add commit --progressive
-
-# Rebase 274a2a1..9c32078 onto 274a2a1 (4 commands)
-#
-# Commands:
-# p, pick <commit> = use commit
-# r, reword <commit> = use commit, but edit the commit message
-# e, edit <commit> = use commit, but stop for amending
-# s, squash <commit> = use commit, but meld into previous commit
-# f, fixup <commit> = like "squash", but discard this commit's log message
-# x, exec <command> = run command (the rest of the line) using shell
-# d, drop <commit> = remove commit
-# l, label <label> = label current HEAD with a name
-# t, reset <label> = reset HEAD to a label
-# m, merge [-C <commit> | -c <commit>] <label> [# <oneline>]
-# .       create a merge commit using the original merge commit's
-# .       message (or the oneline, if no original merge commit was
-# .       specified). Use -c <commit> to reword the commit message.
-#
-# These lines can be re-ordered; they are executed from top to bottom.
-#
-# If you remove a line here THAT COMMIT WILL BE LOST.
-#
-#	However, if you remove everything, the rebase will be aborted.
-#
-#
-# Note that empty commits are commented out
 

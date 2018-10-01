@@ -340,3 +340,59 @@ Or from another person fork:
     $ git remote add friend git@fork-url
     $ git pull -r friend branch-name
 
+# Git push
+
+Git push allow you to send commits to a remote git repository.
+
+## Git push `-u`
+
+The `-u` option will automatically track the remote branch with the local branch
+and you don't need to  say the remote and the branch name everytime.
+
+    $ git checkout -b new-branch
+    $ git push -u origin new-branch
+
+Now the branch is tracked and you can simply say `git push` or `git pull`.
+
+For deleting a branch from a remote source the branch you also use pull with the following syntax:
+
+    $ git push origin :new-branch
+
+For deleting the branch locally, use `git branch -D branch-name`
+
+# Git fetch
+
+Use git fetch to checkout other people work from the remote. Example:
+
+    $ git fetch origin
+
+## Git fetch `--prune`
+
+If you work with a big team and multiple people are pushing branches everyday,
+use `--prune` option can be useful. It deletes local references to remote branches
+that have been deleted in the remote.
+
+# Git checkout
+
+Git checkout switch between branches or restore working tree files.
+
+* Git checkout `-b` to create a new branch
+
+## Restore to a specific commit
+
+Let's say you messed with something and need to rollback the latest 3 commits
+and make it your last commit in a branch.
+
+You can use git reflog to try something.
+
+## Git reflog
+
+    $ git reflog
+
+It will bring a list of commits and all actions executed in the local host.
+
+Find the commit reference and checkout the HEAD.
+
+    git co HEAD@{3}
+    git branch -D my-branch
+    git co -b my-branch

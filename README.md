@@ -274,8 +274,10 @@ Now we have a fixup and we can group them into the previous commit. We can start
 rebasing from the first commit using the interactive mode to choose what we want
 to squash:
 
-It will open your editor and you can choose what you want to do with each
-message:
+## Git rebase `-i`
+
+With interactive mode, it will open your editor and you can choose what you want to do with each
+message: 
 
 ```
 pick 8efea81 Add commit -p
@@ -288,4 +290,53 @@ You can see it suggests to `fixup` the commit we marked with `--fixup`.
 
 If you simply save the file and quit it will rewrite your commits following the
 order stated previously.
+
+The current rebase can fail and you will see a message warning about conflicts.
+
+```
+Auto-merging README.md
+CONFLICT (content): Merge conflict in README.md
+error: could not apply 239449e... fixup! Add commit -p
+
+Resolve all conflicts manually, mark them as resolved with
+"git add/rm <conflicted_files>", then run "git rebase --continue".
+You can instead skip this commit: run "git rebase --skip".
+To abort and get back to the state before "git rebase", run "git rebase --abort".
+
+Could not apply 239449e... fixup! Add commit -p
+```
+
+You can open the `README.md` file and fix the errors to continue the rebase or
+abort and start again.
+
+Learn more about rebase and squash [here](https://robots.thoughtbot.com/autosquashing-git-commits).
+
+# Git pull
+
+Git pull automatically download commits but it also create extra merge commits
+for each fetch.
+
+    $ git pull origin master
+
+## Git pull `-r`
+
+Using pull with `--rebase` or `-r` option allow to receive new commits without
+poluting the commit history.
+
+Rebase rewrite your commits in the top of the branch that you're using. It can
+be useful to keep your branch up to date with master and for getting the latest
+news from master you can simply rebase from master branch.
+
+    $ git pull -r origin master
+
+In case you're working with teammates in the same branch you can rebase from
+others people work.
+
+    $ git checkout branch-name
+    $ git pull -r origin branch-name
+
+Or from another person fork:
+
+    $ git remote add friend git@fork-url
+    $ git pull -r friend branch-name
 
